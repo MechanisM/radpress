@@ -1,4 +1,5 @@
 # Django settings for demo project.
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -85,6 +86,8 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #    'django.template.loaders.eggs.Loader',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS += ('radpress.context_processors.context_data',)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
