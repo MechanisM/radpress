@@ -1,5 +1,8 @@
 # Django settings for demo project.
+import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+PROJECT_ROOT = os.path.split(os.path.realpath(os.path.dirname(__file__)))[0]
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -13,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'demo.sql'
+        'NAME': os.path.join(PROJECT_ROOT, 'demo.sql')
     }
 }
 

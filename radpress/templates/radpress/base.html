@@ -89,12 +89,12 @@
               <p>Copyright &copy; {% now "Y" %} - Gökmen Görgen - Powered by RADPRESS</p>
             </div>
             <div class="span3">
-              {% if is_admin %}
-                <a href="#" class="pull-right menu">
+              {% if user.is_authenticated %}
+                <a href="{% url admin:logout %}?next={% url radpress-index %}" class="pull-right menu">
                   {% trans "logout" %}
                 </a>
               {% endif %}
-              <a href="#" class="pull-right menu">
+              <a href="{% url admin:index %}" class="pull-right menu">
                 {% trans "dashboard" %}
               </a>
             </div>
