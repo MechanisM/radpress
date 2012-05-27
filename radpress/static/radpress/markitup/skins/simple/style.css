@@ -1,5 +1,6 @@
 .markItUp * {
-    margin:0px; padding:0px;
+    margin: 0;
+    padding:0;
     outline:none;
 }
 .markItUp a:link,
@@ -8,7 +9,6 @@
     text-decoration:none;
 }
 .markItUp  {
-    /*width:700px;*/
     margin:5px 0 5px 0;
 }
 .markItUpContainer  {
@@ -16,20 +16,28 @@
     font:11px Verdana, Arial, Helvetica, sans-serif;
 }
 .markItUpEditor {
-    font: 16px 'Courier New', Courier, monospace;
+    font: 14px 'Courier New', Courier, monospace;
     padding:5px;
-    width:690px;
-    height:320px;
+    height: 320px;
     clear:both;
     line-height:18px;
     overflow:auto;
 }
-.markItUpPreviewFrame	{
+
+.vLargeTextField.markItUpEditor,
+.markItUpPreviewFrame {
+    width: 60% !important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.markItUpPreviewFrame {
     overflow:auto;
     background-color:#FFF;
-    width:99.9%;
     height:300px;
     margin:5px 0;
+    border: 1px solid #ddd;
 }
 .markItUpFooter {
     width:100%;
@@ -44,7 +52,7 @@
 }
 /***************************************************************************************/
 /* first row of buttons */
-.markItUpHeader ul li	{
+.markItUpHeader ul li {
     list-style:none;
     float:left;
     position:relative;
@@ -60,6 +68,9 @@
     margin-right:0px;
 }
 /* next rows of buttons */
+.markItUpHeader {
+    height: 25px;
+}
 .markItUpHeader ul ul {
     display:none;
     position:absolute;
