@@ -1,7 +1,6 @@
 {% extends "radpress/base.html" %}
 
 {% load trans from i18n %}
-{% load restructuredtext from radpress_tags %}
 
 {% block title %}{% trans "Mainpage" %}{% endblock %}
 
@@ -15,7 +14,7 @@
             <a href="#">{{ object.title }}</a>
           </h1>
           <div class="article-content">
-            {{ object.content|restructuredtext }}
+            {{ object.content_body|safe }}
           </div>
         </div>
       {% endfor %}

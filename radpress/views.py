@@ -1,8 +1,13 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+from radpress.models import Article
 
 
-class Index(TemplateView):
+class Index(ListView):
     template_name = 'radpress/index.html'
+    model = Article
+
+    def get_queryset(self):
+        return self.model.objects.all_published()
 
 
 class Preview(TemplateView):
