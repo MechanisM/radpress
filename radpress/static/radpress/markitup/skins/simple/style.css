@@ -33,11 +33,10 @@
 }
 
 .markItUpPreviewFrame {
-    overflow:auto;
-    background-color:#FFF;
-    height:300px;
-    margin:5px 0;
-    border: 1px solid #ddd;
+    overflow: auto;
+    height: 350px;
+    margin: 15px 0 5px 0;
+    border: 2px solid #aaa;
 }
 .markItUpFooter {
     width:100%;
