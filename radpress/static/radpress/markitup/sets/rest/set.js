@@ -1,6 +1,6 @@
 restSettings = {
-    previewParserPath:	'', // path to your ReStructuredText parser
-    onShiftEnter:		{keepDefault:false, replaceWith:'\n\n'},
+    previewParserPath: '', // path to your ReStructuredText parser
+    onShiftEnter: {keepDefault:false, replaceWith:'\n\n'},
     markupSet: [
         {name:'Heading', key:'1', placeHolder:'Your title here...', closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '*') } },
         {name:'Heading', key:'2', placeHolder:'Your title here...', closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
@@ -24,14 +24,16 @@ restSettings = {
     ]
 };
 
-// mIu nameSpace to avoid conflict.
-miu = {
-    markdownTitle: function(markItUp, char) {
-        heading = '';
-        n = $.trim(markItUp.selection||markItUp.placeHolder).length;
-        for(i = 0; i < n; i++) {
-            heading += char;
+(function($) {
+    // mIu nameSpace to avoid conflict.
+    miu = {
+        markdownTitle: function(markItUp, char) {
+            heading = '';
+            n = $.trim(markItUp.selection||markItUp.placeHolder).length;
+            for(i = 0; i < n; i++) {
+                heading += char;
+            }
+            return '\n'+heading;
         }
-        return '\n'+heading;
-    }
-};
+    };
+})(django.jQuery);

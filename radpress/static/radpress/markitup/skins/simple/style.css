@@ -24,7 +24,7 @@
     overflow:auto;
 }
 
-.vLargeTextField.markItUpEditor,
+.markItUpEditor,
 .markItUpPreviewFrame {
     width: 60% !important;
     box-sizing: border-box;
