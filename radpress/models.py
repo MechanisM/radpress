@@ -10,7 +10,7 @@ class ArticleManager(models.Manager):
 
 class Article(models.Model):
     title = models.CharField(max_length=50)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     content = models.TextField()
     content_body = models.TextField(editable=False)
     is_published = models.BooleanField()
@@ -29,4 +29,3 @@ class Article(models.Model):
         self.content_body = restructuredtext(self.content)
 
         super(Article, self).save(**kwargs)
-

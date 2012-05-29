@@ -1,0 +1,14 @@
+{% load trans from i18n %}
+
+<h3>{% trans "Recent Posts" %}</h3>
+
+<ul>
+  {% for object in object_list %}
+    <li>
+      <a href="{% url radpress-detail object.slug %}">
+        <h5>{{ object.title }}</h5>
+        <time datetime="{{ object.updated_at }}">{{ object.updated_at|date:"Y, F d" }}</time>
+      </a>
+    </li>
+  {% endfor %}
+</ul>
