@@ -17,11 +17,20 @@ class Detail(DetailView):
     def get_context_data(self, **kwargs):
         data = super(Detail, self).get_context_data(**kwargs)
         data.update({
-            'object_list': Article.objects.all_published().values(
+            'object_list': self.model.objects.all_published().values(
                 'slug', 'title', 'updated_at')
         })
 
         return data
+
+
+class Archive(ListView):
+    template_name = 'radpress/archive.html'
+    model = Article
+
+    def get_queryset(self):
+        return self.model.objects.all_published().values(
+            'slug', 'title', 'updated_at')
 
 
 class Preview(TemplateView):
