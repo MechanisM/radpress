@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from radpress.views import Index, Preview
+from radpress.views import Detail, Index, Preview
 
 urlpatterns = patterns(
     '',
@@ -8,7 +8,11 @@ urlpatterns = patterns(
         view=Index.as_view(),
         name='radpress-index'),
 
+    url(r'^detail/(?P<slug>[-\w]+)/$',
+        view=Detail.as_view(),
+        name='radpress-detail'),
+
     url(r'^preview/$',
         view=Preview.as_view(),
-        name='radpress-preview')
+        name='radpress-preview'),
 )
