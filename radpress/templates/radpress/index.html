@@ -11,7 +11,7 @@
         <div class="article">
           <time datetime="{{ object.updated_at.isoformat }}">{{ object.updated_at|date:"m F, Y"|upper }}</time>
           <h1 class="entry-title">
-            <a href="#">{{ object.title }}</a>
+            <a href="{% url radpress-detail object.slug %}">{{ object.title }}</a>
           </h1>
           <div class="article-content">
             {{ object.content_body|safe }}
@@ -24,5 +24,11 @@
     {% else %}
       <p class="set-content-margin">{% trans "There's no post for now." %}</p>
     {% endif %}
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  <div class="sidebar-box">
+    {% include "radpress/_recent_posts.html" %}
   </div>
 {% endblock %}

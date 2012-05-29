@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from radpress.models import Article
 
 
@@ -8,6 +8,20 @@ class Index(ListView):
 
     def get_queryset(self):
         return self.model.objects.all_published()
+
+
+class Detail(DetailView):
+    template_name = 'radpress/detail.html'
+    model = Article
+
+    def get_context_data(self, **kwargs):
+        data = super(Detail, self).get_context_data(**kwargs)
+        data.update({
+            'object_list': Article.objects.all_published().values(
+                'slug', 'title', 'updated_at')
+        })
+
+        return data
 
 
 class Preview(TemplateView):
