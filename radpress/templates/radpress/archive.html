@@ -1,0 +1,31 @@
+{% extends "radpress/base.html" %}
+
+{% load trans from i18n %}
+
+{% block content %}
+  <div id="blog-archive" class="set-content-margin">
+    <h1>{% trans "Blog Archive" %}</h1>
+
+    <ul>
+      {% for object in object_list %}
+        <li class="row-fluid">
+          <div class="span2">
+            <span class="year">{{ object.updated_at|date:"Y" }}</span>
+          </div>
+          <div class="span2">
+            <span class="month-day pull-left">{{ object.updated_at|date:"b d"|upper }}</span>
+          </div>
+          <div class="span8">
+            <h2 class="article-title">
+              <a href="{% url radpress-detail object.slug %}">
+                {{ object.title }}
+              </a>
+            </h2>
+          </div>
+        </li>
+      {% empty %}
+        <li>{% trans "There's no blog entry." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

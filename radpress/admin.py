@@ -1,5 +1,5 @@
 from django.contrib import admin
-from radpress.models import Article
+from radpress.models import Article, Setting
 from radpress.forms import ArticleForm
 
 
@@ -22,6 +22,11 @@ class ArticleAdmin(admin.ModelAdmin, MarkupAdminMixin):
     prepopulated_fields = {'slug': ('title',)}
     form = ArticleForm
 
-
-
 admin.site.register(Article, ArticleAdmin)
+
+
+class SettingAdmin(admin.ModelAdmin):
+
+    list_display = ['site', 'title']
+
+admin.site.register(Setting, SettingAdmin)
