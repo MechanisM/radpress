@@ -5,13 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from radpress.templatetags.radpress_tags import restructuredtext
 
 
-class ArticleManager(models.Manager):
+class EntryManager(models.Manager):
 
     def all_published(self):
         return self.filter(is_published=True)
 
 
-class Article(models.Model):
+class Entry(models.Model):
     """
     Radpress' main model. It includes articles to show in Radpress mainpage.
     The content body is auto filled by content value after it converted to html
@@ -29,9 +29,10 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = ArticleManager()
+    objects = EntryManager()
 
     class Meta:
+        abstract = True
         ordering = ('-created_at', 'updated_at')
 
     def __unicode__(self):
@@ -40,7 +41,15 @@ class Article(models.Model):
     def save(self, **kwargs):
         self.content_body = restructuredtext(self.content)
 
-        super(Article, self).save(**kwargs)
+        super(Entry, self).save(**kwargs)
+
+
+class Article(Entry):
+    pass
+
+
+class Page(Entry):
+    pass
 
 
 class SettingManager(models.Manager):
