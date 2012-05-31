@@ -1,0 +1,9 @@
+{% extends "radpress/base_content.html" %}
+
+{% block content %}
+  <h1>{{ object.title }}</h1>
+
+  <div class="article-content">
+    {{ object.content_body|safe }}
+  </div>
+{% endblock %}

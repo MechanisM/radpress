@@ -1,5 +1,5 @@
 from django.contrib import admin
-from radpress.models import Article, Setting, Page
+from radpress.models import Article, Menu, Page, Setting
 from radpress.forms import ArticleForm, PageForm
 
 
@@ -32,7 +32,14 @@ class PageAdmin(EntryAdmin):
 admin.site.register(Page, PageAdmin)
 
 
+class MenuInline(admin.TabularInline):
+    model = Menu
+    max_num = 5
+    extra = 5
+
+
 class SettingAdmin(admin.ModelAdmin):
     list_display = ['site', 'title']
+    inlines = [MenuInline]
 
 admin.site.register(Setting, SettingAdmin)

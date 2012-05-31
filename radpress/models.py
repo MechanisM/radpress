@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from radpress.templatetags.radpress_tags import restructuredtext
@@ -55,7 +56,32 @@ class Page(Entry):
 class SettingManager(models.Manager):
 
     def get_current_settings(self):
-        return self.values().get(site__id=settings.SITE_ID)
+        data = {}
+        prefix = 'RADPRESS'
+
+        # get settings
+        settings_dict = self.values().get(site__id=settings.SITE_ID)
+        for setting in settings_dict:
+            if setting.endswith('id'):
+                continue
+
+            data_key = '%s_%s' % (prefix, setting.upper())
+            data_value = settings_dict.get(setting)
+            data.update({data_key: data_value})
+
+        # add related menu list to data dictionary
+        menus = []
+        for menu in Menu.objects.filter(
+            setting__site__id=settings.SITE_ID, page__is_published=True):
+
+            menus.append({
+                'url': reverse('radpress-page-detail', args=[menu.page.slug]),
+                'title': menu.page.title
+            })
+
+        data.update({'%s_MENUS' % prefix: menus})
+
+        return data
 
 
 class Setting(models.Model):
@@ -70,3 +96,15 @@ class Setting(models.Model):
 
     def __unicode__(self):
         return unicode(self.site)
+
+
+class Menu(models.Model):
+    setting = models.ForeignKey(Setting)
+    order = models.PositiveSmallIntegerField(default=3)
+    page = models.ForeignKey(Page, unique=True)
+
+    class Meta:
+        unique_together = ('setting', 'order', 'page')
+
+    def __unicode__(self):
+        return u'%s - %s' % (self.order, self.page.title)
