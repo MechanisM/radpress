@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
-from radpress.models import Article
+from radpress.models import Article, Page
 
 
 class Index(ListView):
@@ -14,6 +15,12 @@ class Detail(DetailView):
     template_name = 'radpress/detail.html'
     model = Article
 
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(
+            self.model, slug=self.kwargs.get('slug'), is_published=True)
+
+        return obj
+
     def get_context_data(self, **kwargs):
         data = super(Detail, self).get_context_data(**kwargs)
         data.update({
@@ -22,6 +29,11 @@ class Detail(DetailView):
         })
 
         return data
+
+
+class PageDetail(Detail):
+    template_name = 'radpress/page_detail.html'
+    model = Page
 
 
 class Archive(ListView):
