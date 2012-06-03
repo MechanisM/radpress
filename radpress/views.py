@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import (
+    DetailView, ListView, TemplateView, ArchiveIndexView)
 from radpress.models import Article, Page
 
 
@@ -8,7 +9,7 @@ class Index(ListView):
     model = Article
 
     def get_queryset(self):
-        return self.model.objects.all_published()
+        return self.model.objects.all_published()[:5]
 
 
 class Detail(DetailView):
@@ -36,9 +37,11 @@ class PageDetail(Detail):
     model = Page
 
 
-class Archive(ListView):
+class Archive(ArchiveIndexView):
     template_name = 'radpress/archive.html'
     model = Article
+    date_field = 'updated_at'
+    paginate_by = 25
 
     def get_queryset(self):
         return self.model.objects.all_published().values(

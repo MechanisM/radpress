@@ -200,3 +200,7 @@ h3.blog-archives a:hover {
 #blog-archive span.month-day {
     font-size: 18px;
 }
+.pager {
+    margin: 0;
+    padding: 20px;
+}
