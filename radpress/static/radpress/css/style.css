@@ -101,11 +101,14 @@ footer a.menu {
   font-size: 3em;
   line-height: 1.5em;
 }
+.article p,
+.article li {
+    font-size: 1.4em;
+    line-height: 1.8em;
+}
 .article p {
   margin: 25px 0;
   font-family: serif;
-  font-size: 1.4em;
-  line-height: 1.8em;
 }
 #blog-form h1.page-title {
     margin-bottom: 20px;
@@ -196,4 +199,8 @@ h3.blog-archives a:hover {
 }
 #blog-archive span.month-day {
     font-size: 18px;
+}
+.pager {
+    margin: 0;
+    padding: 20px;
 }
