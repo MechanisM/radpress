@@ -4,7 +4,11 @@
 
 {% block content %}
   <div class="article">
-    <h1 class="entry-title">{{ object.title }}</h1>
+    <h1 class="entry-title">
+      <a href="{% url radpress-detail object.slug %}">
+        {{ object.title }}
+      </a>
+    </h1>
 
     <div class="article-content">
       {{ object.content_body|safe }}

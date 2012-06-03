@@ -1,0 +1,15 @@
+{% extends "radpress/base_content.html" %}
+
+{% block content %}
+  <div class="article">
+    <h1 class="entry-title">
+      <a href="{% url radpress-page-detail object.slug %}">
+        {{ object.title }}
+      </a>
+    </h1>
+
+    <div class="article-content">
+      {{ object.content_body|safe }}
+    </div>
+  </div>
+{% endblock %}

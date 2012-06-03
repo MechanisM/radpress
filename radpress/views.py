@@ -1,5 +1,7 @@
-from django.views.generic import DetailView, ListView, TemplateView
-from radpress.models import Article
+from django.shortcuts import get_object_or_404
+from django.views.generic import (
+    DetailView, ListView, TemplateView, ArchiveIndexView)
+from radpress.models import Article, Page
 
 
 class Index(ListView):
@@ -7,12 +9,18 @@ class Index(ListView):
     model = Article
 
     def get_queryset(self):
-        return self.model.objects.all_published()
+        return self.model.objects.all_published()[:5]
 
 
 class Detail(DetailView):
     template_name = 'radpress/detail.html'
     model = Article
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(
+            self.model, slug=self.kwargs.get('slug'), is_published=True)
+
+        return obj
 
     def get_context_data(self, **kwargs):
         data = super(Detail, self).get_context_data(**kwargs)
@@ -24,9 +32,16 @@ class Detail(DetailView):
         return data
 
 
-class Archive(ListView):
+class PageDetail(Detail):
+    template_name = 'radpress/page_detail.html'
+    model = Page
+
+
+class Archive(ArchiveIndexView):
     template_name = 'radpress/archive.html'
     model = Article
+    date_field = 'updated_at'
+    paginate_by = 25
 
     def get_queryset(self):
         return self.model.objects.all_published().values(

@@ -46,10 +46,10 @@
           <li>
             <a href="{% url radpress-archive %}">{% trans "Archive" %}</a>
           </li>
-          {% for menu in menus %}
+          {% for menu in RADPRESS_MENUS %}
             <li class="divider-vertical"></li>
             <li>
-              <a href="#">{{ menu.page.title }}</a>
+              <a href="{{ menu.url }}">{{ menu.title }}</a>
             </li>
           {% endfor %}
         </ul>
@@ -58,28 +58,30 @@
 
     <div class="container">
       <div id="wrapper">
-        <div class="row">
-          <div class="span9">
-            {% if messages %}
-              <div id="message">
-                {% for message in messages %}
-                  <div class="alert{% if message.tags %} {{ message.tags }}{% endif %}">
-                    <button class="close" data-dismiss="alert">×</button>
-                    {{ message }}
-                  </div>
-                {% endfor %}
+        {% if messages %}
+          <div id="message">
+            {% for message in messages %}
+              <div class="alert{% if message.tags %} {{ message.tags }}{% endif %}">
+                <button class="close" data-dismiss="alert">×</button>
+                {{ message }}
               </div>
-            {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
 
-            <div id="content" class="{% block content_class %}{% endblock %}">
-              {% block content %}{% endblock %}
+        <div class="row">
+          {% block base_content %}
+            <div class="span9">
+              <div id="content" class="{% block content_class %}{% endblock %}">
+                {% block content %}{% endblock %}
+              </div>
             </div>
-          </div>
-          <div class="span3">
-            <div id="sidebar">
-              {% block sidebar %}{% endblock %}
+            <div class="span3">
+              <div id="sidebar">
+                {% block sidebar %}{% endblock %}
+              </div>
             </div>
-          </div>
+          {% endblock %}
         </div>
       </div>
       <div class="container">

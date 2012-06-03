@@ -1,7 +1,7 @@
 from django import forms
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
-from radpress.models import Article
+from radpress.models import Entry, Page
 
 
 class MarkupWidget(forms.Textarea):
@@ -20,15 +20,23 @@ class MarkupWidget(forms.Textarea):
         return mark_safe(html)
 
 
-class ArticleForm(forms.ModelForm):
+class EntryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        super(ArticleForm, self).__init__(*args, **kwargs)
+        super(EntryForm, self).__init__(*args, **kwargs)
 
         # change content widget.
         content = self.fields.get('content')
         content.widget = MarkupWidget()
 
 
+class ArticleForm(EntryForm):
+
     class Meta:
-        model = Article
+        model = Entry
+
+
+class PageForm(EntryForm):
+
+    class Meta:
+        model = Page
