@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
 from radpress.views import Archive, Detail, Index, Preview, PageDetail
+from radpress.feeds import ArticleFeed
 
 urlpatterns = patterns(
     '',
@@ -23,5 +24,6 @@ urlpatterns = patterns(
     url(r'^preview/$',
         view=Preview.as_view(),
         name='radpress-preview'),
-    )
 
+    url(r'^rss/$', ArticleFeed())
+)

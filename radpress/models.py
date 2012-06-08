@@ -56,6 +56,9 @@ class Page(Entry):
 class SettingManager(models.Manager):
 
     def get_current_settings(self):
+        return self.get(site__id=settings.SITE_ID)
+
+    def get_current_settings_dict(self):
         data = {}
         prefix = 'RADPRESS'
 
