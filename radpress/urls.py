@@ -25,5 +25,11 @@ urlpatterns = patterns(
         view=Preview.as_view(),
         name='radpress-preview'),
 
-    url(r'^rss/$', ArticleFeed())
+    url(r'^rss/$',
+        view=ArticleFeed(),
+        name='radpress-rss'),
+
+    url(r'^rss/(?P<tags>[-/\w]+)/$',
+        view=ArticleFeed(),
+        name='radpress-rss')
 )

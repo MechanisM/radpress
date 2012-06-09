@@ -11,11 +11,13 @@ header {
   padding: 50px 50px 30px 50px;
   color: #eee;
 }
-nav,
 .article,
 .set-content-margin,
 footer {
   padding: 0 40px;
+}
+nav {
+    padding: 0 30px;
 }
 #dashboard table {
     background: #fff;

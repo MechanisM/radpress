@@ -1,6 +1,6 @@
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse_lazy
-from radpress.models import Article, Setting
+from radpress.models import Article, Setting, Tag
 
 
 class ArticleFeed(Feed):
@@ -11,8 +11,19 @@ class ArticleFeed(Feed):
         self.description = settings.description
         self.link = reverse_lazy('radpress-index')
 
-    def get_object(self, request):
+    def get_object(self, request, tags=None):
         objects = Article.objects.filter(is_published=True)
+
+        if tags:
+            tag_list = []
+            for name in tags.split('/'):
+                try:
+                    tag = Tag.objects.get(name=name)
+                    tag_list.append(tag)
+                except Tag.DoesNotExist:
+                    pass
+
+            objects = objects.filter(tags__in=tag_list).distinct()
 
         return objects
 
