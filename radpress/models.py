@@ -64,7 +64,15 @@ class Page(Entry):
 class SettingManager(models.Manager):
 
     def get_current_settings(self):
-        return self.get(site__id=settings.SITE_ID)
+        site = Site.objects.get(id=settings.SITE_ID)
+        (setting, is_created) = self.get_or_create(site=site)
+
+        if is_created:
+            setting.title = 'Radpress'
+            setting.description = "A blogging application for Djangonauts."
+            setting.save()
+
+        return setting
 
     def get_current_settings_dict(self):
         data = {}
