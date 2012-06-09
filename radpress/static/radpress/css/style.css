@@ -11,11 +11,13 @@ header {
   padding: 50px 50px 30px 50px;
   color: #eee;
 }
-nav,
 .article,
 .set-content-margin,
 footer {
   padding: 0 40px;
+}
+nav {
+    padding: 0 30px;
 }
 #dashboard table {
     background: #fff;
@@ -61,6 +63,17 @@ footer {
 #sidebar {
   padding-top: 40px;
   padding-bottom: 40px;
+}
+#sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+#sidebar ul li {
+    margin-bottom: 10px;
+}
+#sidebar ul li a {
+    text-decoration: none;
 }
 #content {
     background: #eee;
@@ -203,4 +216,9 @@ h3.blog-archives a:hover {
 .pager {
     margin: 0;
     padding: 20px;
+}
+
+.tags span {
+    padding: 3px 5px;
+    background-color: #ccc;
 }

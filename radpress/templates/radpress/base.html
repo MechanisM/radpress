@@ -39,6 +39,7 @@
 
       <nav class="navbar">
         <ul class="nav">
+          <li class="divider-vertical"></li>
           <li>
             <a href="{% url radpress-index %}">{% trans "Blog" %}</a>
           </li>
@@ -46,12 +47,19 @@
           <li>
             <a href="{% url radpress-archive %}">{% trans "Archive" %}</a>
           </li>
+          <li class="divider-vertical"></li>
           {% for menu in RADPRESS_MENUS %}
-            <li class="divider-vertical"></li>
             <li>
               <a href="{{ menu.url }}">{{ menu.title }}</a>
             </li>
+            <li class="divider-vertical"></li>
           {% endfor %}
+        </ul>
+
+        <ul class="nav pull-right">
+          <li>
+            <a href="{% url radpress-rss %}">RSS</a>
+          </li>
         </ul>
       </nav>
     </div>

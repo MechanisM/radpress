@@ -4,6 +4,14 @@
 
 {% block content %}
   <div class="article">
+    <time datetime="{{ object.updated_at.isoformat }}">{{ object.updated_at|date:"m F, Y"|upper }}</time>
+    {% if object.tags.count %}
+      <div class="tags">
+        {% for tag in object.tags.all %}
+          <span>{{ tag.name }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
     <h1 class="entry-title">
       <a href="{% url radpress-detail object.slug %}">
         {{ object.title }}
