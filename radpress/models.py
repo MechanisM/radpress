@@ -6,6 +6,14 @@ from django.utils.translation import ugettext_lazy as _
 from radpress.templatetags.radpress_tags import restructuredtext
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+
 class EntryManager(models.Manager):
 
     def all_published(self):
@@ -46,7 +54,7 @@ class Entry(models.Model):
 
 
 class Article(Entry):
-    pass
+    tags = models.ManyToManyField(Tag, null=True, blank=True)
 
 
 class Page(Entry):

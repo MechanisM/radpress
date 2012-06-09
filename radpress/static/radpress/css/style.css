@@ -215,3 +215,8 @@ h3.blog-archives a:hover {
     margin: 0;
     padding: 20px;
 }
+
+.tags span {
+    padding: 3px 5px;
+    background-color: #ccc;
+}
