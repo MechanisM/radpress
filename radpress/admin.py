@@ -1,5 +1,5 @@
 from django.contrib import admin
-from radpress.models import Article, Menu, Page, Setting, Tag
+from radpress.models import Article, ArticleTag, Menu, Page, Setting, Tag
 from radpress.forms import ArticleForm, PageForm
 
 
@@ -20,8 +20,14 @@ class EntryAdmin(admin.ModelAdmin, MarkupAdminMixin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+class ArticleTagInline(admin.TabularInline):
+    model = ArticleTag
+    extra = 1
+
+
 class ArticleAdmin(EntryAdmin):
     form = ArticleForm
+    inlines = [ArticleTagInline]
 
     def tag_list(self, obj):
         tag_list = [tag.name for tag in obj.tags.all()]
