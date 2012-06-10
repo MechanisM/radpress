@@ -54,7 +54,16 @@ class Entry(models.Model):
 
 
 class Article(Entry):
-    tags = models.ManyToManyField(Tag, null=True, blank=True)
+    tags = models.ManyToManyField(
+        Tag, null=True, blank=True, through='ArticleTag')
+
+
+class ArticleTag(models.Model):
+    tag = models.ForeignKey(Tag)
+    article = models.ForeignKey(Article)
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.tag.name, self.article)
 
 
 class Page(Entry):
