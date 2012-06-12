@@ -1,5 +1,5 @@
 from django.contrib import admin
-from radpress.models import Article, ArticleTag, Menu, Page, Setting, Tag
+from radpress.models import Article, ArticleTag, Menu, Page, Tag
 from radpress.forms import ArticleForm, PageForm
 
 
@@ -57,19 +57,6 @@ class PageAdmin(EntryAdmin):
 admin.site.register(Page, PageAdmin)
 
 
-class MenuInline(admin.TabularInline):
-    model = Menu
-    max_num = 5
-    extra = 5
-
-
-class SettingAdmin(admin.ModelAdmin):
-    list_display = ['site', 'title']
-    inlines = [MenuInline]
-
-admin.site.register(Setting, SettingAdmin)
-
-
 class TagAdmin(admin.ModelAdmin):
 
     def articles(self, obj):
@@ -79,3 +66,4 @@ class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Menu, admin.ModelAdmin)

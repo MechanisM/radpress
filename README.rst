@@ -1,6 +1,7 @@
 Radpress
 ========
-Radpress is a simple blogging application for Djangonauts.
+Radpress is a simple blogging application for Djangonauts. It uses
+`restructuredtext`_ format for articles and pages.
 
 Installation
 ------------
@@ -13,3 +14,5 @@ with::
 Authors
 -------
 Gökmen Görgen, <gokmen[@]radity.com>
+
+.. _restructuredtext: http://docutils.sourceforge.net/rst.html
