@@ -230,6 +230,7 @@ pre {
     background-color: #002B36;
     color: #93A1A1;
     margin-bottom: 30px;
+    white-space: pre;
 }
 
 table {
@@ -239,8 +240,12 @@ table {
     -moz-box-sizing: border-box;
 }
 
-table td.linenos {
-    width: 50px;
+table td.code {
+    width: 100%;
+}
+
+table td.linenos pre {
+    width: 20px;
     text-align: right;
 }
 
