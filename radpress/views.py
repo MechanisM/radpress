@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import (
     DetailView, ListView, TemplateView, ArchiveIndexView)
 from radpress.models import Article, Page
+from radpress.settings import DATA
 
 
 class Index(ListView):
@@ -9,7 +10,7 @@ class Index(ListView):
     model = Article
 
     def get_queryset(self):
-        return self.model.objects.all_published()[:5]
+        return self.model.objects.all_published()[:DATA.get('RADPRESS_LIMIT')]
 
 
 class Detail(DetailView):
@@ -26,7 +27,7 @@ class Detail(DetailView):
         data = super(Detail, self).get_context_data(**kwargs)
         data.update({
             'object_list': self.model.objects.all_published().values(
-                'slug', 'title', 'updated_at')
+                'slug', 'title', 'updated_at')[:DATA.get('RADPRESS_LIMIT')]
         })
 
         return data

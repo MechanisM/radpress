@@ -1,6 +1,14 @@
 from django.contrib import admin
-from radpress.models import Article, Menu, Page, Setting, Tag
+from radpress.models import Article, ArticleTag, Menu, Page, Tag
 from radpress.forms import ArticleForm, PageForm
+
+
+def toggle_published(modeladmin, request, queryset):
+    for obj in queryset:
+        obj.is_published = not obj.is_published
+        obj.save()
+
+toggle_published.short_description = "Change published status of the article"
 
 
 class MarkupAdminMixin(object):
@@ -18,22 +26,27 @@ class MarkupAdminMixin(object):
 class EntryAdmin(admin.ModelAdmin, MarkupAdminMixin):
     list_display = ['title', 'created_at', 'updated_at', 'is_published']
     prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('is_published',)
+    search_fields = ('title',)
+    actions = [toggle_published]
+
+
+class ArticleTagInline(admin.TabularInline):
+    model = ArticleTag
+    extra = 1
 
 
 class ArticleAdmin(EntryAdmin):
     form = ArticleForm
+    inlines = [ArticleTagInline]
+    list_display = [
+        'title', 'created_at', 'updated_at', 'tag_list', 'is_published']
+    list_filter = ('is_published', 'tags')
 
     def tag_list(self, obj):
         tag_list = [tag.name for tag in obj.tags.all()]
 
         return ', '.join(tag_list)
-
-    def get_list_display(self, request):
-        list_display = super(ArticleAdmin, self).get_list_display(request)
-        if not 'tag_list' in list_display:
-            list_display.insert(3, 'tag_list')
-
-        return list_display
 
 admin.site.register(Article, ArticleAdmin)
 
@@ -42,19 +55,6 @@ class PageAdmin(EntryAdmin):
     form = PageForm
 
 admin.site.register(Page, PageAdmin)
-
-
-class MenuInline(admin.TabularInline):
-    model = Menu
-    max_num = 5
-    extra = 5
-
-
-class SettingAdmin(admin.ModelAdmin):
-    list_display = ['site', 'title']
-    inlines = [MenuInline]
-
-admin.site.register(Setting, SettingAdmin)
 
 
 class TagAdmin(admin.ModelAdmin):
@@ -66,3 +66,4 @@ class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Menu, admin.ModelAdmin)

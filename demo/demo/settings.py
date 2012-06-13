@@ -153,3 +153,9 @@ LOGGING = {
         },
     }
 }
+
+
+RADPRESS_TITLE = 'Gokmen Gorgen'
+RADPRESS_DESCRIPTION = 'hahahaha.'
+RADPRESS_LIMIT = 5
+#RADPRESS_DISQUS = ''
