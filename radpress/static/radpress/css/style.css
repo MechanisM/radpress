@@ -225,12 +225,16 @@ h3.blog-archives a:hover {
 
 pre {
     padding: 10px 20px;
-    font-size: 12px;
     line-height: 20px;
     background-color: #002B36;
     color: #93A1A1;
     margin-bottom: 30px;
+    font-size: 12px;
+    overflow: auto;
     white-space: pre;
+    word-wrap: break-word;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 table {
