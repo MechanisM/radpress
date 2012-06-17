@@ -5,12 +5,16 @@
  */
 
 var articleDiv = $('.article');
+var highlighttable = $('td.code pre');
 
-if (articleDiv) {
-	var preWidth;
+if (highlighttable) {
+    var preWidth;
+    var spaces = parseInt(articleDiv.css('padding-left').split('px')[0])
+               + $('td.linenos').width();
+    console.log(spaces);
 
-	$(window).on('load resize', function() {
-		preWidth = $('.highlight pre').width() - $('td.linenos').width();
-		$('td.code pre').css('width', preWidth);
-	});
+    $(window).on('load resize', function() {
+        preWidth = articleDiv.width() - spaces;
+        $('td.code pre').css('width', preWidth);
+    });
 }
