@@ -204,6 +204,7 @@ pre {
     white-space: pre;
     word-wrap: normal;
     overflow: auto;
+    border: none;
 }
 
 table {
