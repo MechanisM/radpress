@@ -189,16 +189,16 @@ h3.blog-archives a:hover {
 
 pre {
     padding: 10px 20px;
-    line-height: 20px;
+    margin-bottom: 30px;
     background-color: #002B36;
     color: #93A1A1;
-    margin-bottom: 30px;
+    font-family: 'Bitstream Vera Sans Mono', 'Courier', monospace;
     font-size: 1em;
-    white-space: pre;
-    word-wrap: break-word;
-    overflow-x: auto;
-    overflow-y: hidden;
+    display: block;
     border-radius: 0;
+    white-space: pre;
+    word-wrap: normal;
+    overflow: auto;
 }
 
 table {
@@ -223,6 +223,13 @@ table td.linenos pre {
 
 table.highlighttable td {
     padding: 0;
+}
+
+@media (max-width: 480px) {
+    #sidebar {
+        padding: 10px !important;
+        margin: 10px;
+    }
 }
 
 /* Default Pygmentize Output */
