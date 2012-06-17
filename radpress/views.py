@@ -41,7 +41,7 @@ class PageDetail(Detail):
 class Archive(ArchiveIndexView):
     template_name = 'radpress/archive.html'
     model = Article
-    date_field = 'updated_at'
+    date_field = 'created_at'
     paginate_by = 25
 
     def get_queryset(self):
