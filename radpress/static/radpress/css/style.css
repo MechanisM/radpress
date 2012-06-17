@@ -39,11 +39,6 @@ nav {
 #sidebar ul li a {
     text-decoration: none;
 }
-#content {
-    background: #eee;
-    border-right: 1px solid #ddd;
-    min-height: 350px;
-}
 footer {
   border-top: 1px solid #bbb;
   background: #ccc;
@@ -86,6 +81,15 @@ footer a.menu {
 .article p {
   margin: 25px 0;
   font-family: serif;
+}
+#content {
+    background: #eee;
+    border-right: 1px solid #ddd;
+    min-height: 350px;
+}
+
+#content .article {
+    border-bottom: none;
 }
 #blog-form h1.page-title {
     margin-bottom: 20px;
@@ -225,7 +229,11 @@ table.highlighttable td {
     padding: 0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 767px) {
+    .sidebar-span {
+        border-top: 1px solid #ddd;
+    }
+
     #sidebar {
         padding: 10px !important;
         margin: 10px;
