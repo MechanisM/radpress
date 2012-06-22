@@ -1,39 +1,10 @@
 {% extends "radpress/base.html" %}
 
-{% load trans from i18n %}
-
 {% block title %}{{ object.title }}{% endblock %}
 
 {% block content %}
   <div class="article">
-    <time datetime="{{ object.updated_at.isoformat }}">{{ object.updated_at|date:"m F, Y"|upper }}</time>
-
-    {% if object.tags.count %}
-      <div class="tags">
-        {% for tag in object.tags.all %}
-          <span>{{ tag.name }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if user.is_superuser %}
-      <div class="btn-group pull-right">
-        <a href="{% url admin:radpress_article_change object.id %}" class="btn btn-mini">
-          <i class="icon-edit"></i>
-          {% trans "Edit" %}
-        </a>
-      </div>
-    {% endif %}
-
-    <h1 class="entry-title">
-      <a href="{% url radpress-detail object.slug %}">
-        {{ object.title }}
-      </a>
-    </h1>
-
-    <div class="article-content">
-      {{ object.content_body|safe }}
-    </div>
+    {% include "radpress/_article.html" %}
 
     {% if RADPRESS_DISQUS %}
       <div id="disqus_thread"></div>
