@@ -40,6 +40,9 @@ nav {
 #sidebar ul li a {
     text-decoration: none;
 }
+#sidebar h2 {
+    margin-bottom: 20px;
+}
 footer {
   border-top: 1px solid #bbb;
   background: #ccc;
@@ -169,27 +172,30 @@ h3.blog-archives a:hover {
 #blog-archive li {
     margin-top: 20px;
 }
-#blog-archive span {
+#blog-archive span,
+#blog-archive time {
     display: block;
     vertical-align: middle;
     line-height: 50px;
     text-align: center;
     color: #aaa;
 }
-#blog-archive span.year {
-    font-size: 28px;
+#blog-archive time {
+    font-size: 20px;
 }
-#blog-archive span.month-day {
-    font-size: 18px;
+#archive-tags a.remove-tag {
+    margin: -25px 0 7px 0;
+    display: block;
 }
 .pager {
     margin: 0;
     padding: 20px;
 }
 
-.tags span {
-    margin-right: 10px;
+.tags a {
+    margin: 0 10px 10px 0;
     padding: 3px 5px;
+    display: inline-block;
 }
 
 pre {

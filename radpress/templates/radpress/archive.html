@@ -1,4 +1,4 @@
-{% extends "radpress/base_content.html" %}
+{% extends "radpress/base.html" %}
 
 {% load trans from i18n %}
 
@@ -10,12 +10,11 @@
       {% for object in object_list %}
         <li class="row-fluid">
           <div class="span2">
-            <span class="year">{{ object.updated_at|date:"Y" }}</span>
+            <time data-datetime="{{ object.updated_at }}">
+              {{ object.updated_at|date:"b d, Y"|upper }}
+            </time>
           </div>
-          <div class="span2">
-            <span class="month-day pull-left">{{ object.updated_at|date:"b d"|upper }}</span>
-          </div>
-          <div class="span8">
+          <div class="span10">
             <h2 class="article-title">
               <a href="{% url radpress-detail object.slug %}">
                 {{ object.title }}
@@ -33,14 +32,38 @@
     <ul class="pager">
       {% if page_obj.has_previous %}
         <li class="previous">
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+          <a href="?{% if enabled_tag %}tag={{ enabled_tag }}{% endif %}&page={{ page_obj.previous_page_number }}">previous</a>
         </li>
       {% endif %}
       {% if page_obj.has_next %}
         <li class="next">
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?{% if enabled_tag %}tag={{ enabled_tag }}{% endif %}&page={{ page_obj.next_page_number }}">next</a>
         </li>
       {% endif %}
     </ul>
   {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  <div id="archive-tags">
+    <h2>{% trans "Tags" %}</h2>
+
+    {% if enabled_tag %}
+      <a href="{% url radpress-archive %}" class="remove-tag">
+        {% trans "remove tag" %}
+      </a>
+    {% endif %}
+
+    <div class="tags">
+      {% for tag in tag_list %}
+        <a class="label {% if tag.slug != enabled_tag %} label-info{% endif %}"
+           href="{% url radpress-archive %}?tag={{ tag.slug }}">
+          <i class="icon-tag icon-white"></i>
+          {{ tag.name }}
+        </a>
+      {% empty %}
+        <span class="warning">{% trans "No tag found." %}</span>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

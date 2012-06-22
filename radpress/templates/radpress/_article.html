@@ -14,10 +14,10 @@
 {% if object.tags.count %}
   <div class="tags">
     {% for tag in object.tags.all %}
-      <span class="label label-info">
+      <a class="label label-info" href="{% url radpress-archive %}?tag={{ tag.slug }}">
         <i class="icon-tag icon-white"></i>
         {{ tag.name }}
-      </span>
+      </a>
     {% endfor %}
   </div>
 {% endif %}

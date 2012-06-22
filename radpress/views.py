@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     DetailView, ListView, TemplateView, ArchiveIndexView)
-from radpress.models import Article, Page
+from radpress.models import Article, Page, Tag
 from radpress.settings import DATA
 
 
@@ -45,8 +45,23 @@ class Archive(ArchiveIndexView):
     paginate_by = 25
 
     def get_queryset(self):
-        return self.model.objects.all_published().values(
-            'slug', 'title', 'updated_at')
+        queryset = self.model.objects.all_published()
+
+        # filter for tags, if possible...
+        tag = self.request.GET.get('tag')
+        if tag:
+            queryset = queryset.filter(tags__slug=tag)
+
+        return queryset.values('slug', 'title', 'updated_at')
+
+    def get_context_data(self, **kwargs):
+        data = super(Archive, self).get_context_data(**kwargs)
+        data.update({
+            'enabled_tag': self.request.GET.get('tag'),
+            'tag_list': Tag.objects.values('name', 'slug').all()
+        })
+
+        return data
 
 
 class Preview(TemplateView):
