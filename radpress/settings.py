@@ -9,3 +9,5 @@ DATA = {
     'RADPRESS_GA_CODE': getattr(settings, 'RADPRESS_GA_CODE', None),
     'RADPRESS_DISQUS': getattr(settings, 'RADPRESS_DISQUS', None)
 }
+
+MORE_TAG = '<!-- more -->'

@@ -29,5 +29,9 @@
 </h1>
 
 <div class="article-content">
-  {{ object.content_body|safe }}
+  {% if by_more %}
+    {{ object.content_by_more|safe }}
+  {% else %}
+    {{ object.content_body|safe }}
+  {% endif %}
 </div>

@@ -1,5 +1,6 @@
 from django.db import models
 from radpress.templatetags.radpress_tags import restructuredtext
+from radpress.settings import MORE_TAG
 
 
 class Tag(models.Model):
@@ -52,6 +53,16 @@ class Entry(models.Model):
 class Article(Entry):
     tags = models.ManyToManyField(
         Tag, null=True, blank=True, through='ArticleTag')
+
+    @property
+    def content_by_more(self):
+        content_list = self.content_body.split(MORE_TAG, 1)
+        content = content_list[0]
+
+        if len(content_list) > 1:
+            content = content.strip() + '</div>'
+
+        return content
 
 
 class ArticleTag(models.Model):

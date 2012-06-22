@@ -12,6 +12,12 @@ class Index(ListView):
     def get_queryset(self):
         return self.model.objects.all_published()[:DATA.get('RADPRESS_LIMIT')]
 
+    def get_context_data(self, **kwargs):
+        data = super(Index, self).get_context_data(**kwargs)
+        data.update({'by_more': True})
+
+        return data
+
 
 class Detail(DetailView):
     template_name = 'radpress/detail.html'

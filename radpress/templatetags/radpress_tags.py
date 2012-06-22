@@ -4,7 +4,7 @@ from django.utils.encoding import smart_str, force_unicode
 from django.utils.safestring import mark_safe
 from docutils.core import publish_parts
 from docutils.parsers.rst import directives
-from radpress.rst_directives import Pygments
+from radpress.rst_directives import Pygments, More
 
 register = template.Library()
 
@@ -21,3 +21,4 @@ def restructuredtext(value):
 
 restructuredtext.is_safe = True
 directives.register_directive('sourcecode', Pygments)
+directives.register_directive('more', More)
