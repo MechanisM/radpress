@@ -8,8 +8,11 @@
   <div id="articles">
     {% if object_list.count %}
       {% for object in object_list %}
-        <div class="article">
+        <div class="article article-index">
           {% include "radpress/_article.html" %}
+
+          <a href="{% url radpress-detail object.slug %}"
+             class="more">{% trans "continue reading" %} →</a>
         </div>
       {% endfor %}
       <h3 class="blog-archives">
