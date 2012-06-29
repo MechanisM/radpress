@@ -6,6 +6,23 @@ from radpress.templatetags.radpress_tags import restructuredtext
 from radpress.settings import MORE_TAG
 
 
+class ThumbnailModelMixin(object):
+    def get_thumbnail(self, path, size):
+        thumbnailer = get_thumbnailer(path)
+        thumb = thumbnailer.get_thumbnail({'size': size, 'crop': True})
+
+        return thumb
+
+    def get_thumbnail_tag(self, image, size=None):
+        size = size or (50, 50)
+        thumb = self.get_thumbnail(image.path, size)
+        url = thumb.url.replace(
+            '%s/' % settings.MEDIA_ROOT, settings.MEDIA_URL)
+        res = '<a href="%s" target="_blank"><img src="%s" height="%s" /></a>'
+
+        return res % (image.url, url, size[1])
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
@@ -14,7 +31,7 @@ class Tag(models.Model):
         return unicode(self.name)
 
 
-class EntryImage(models.Model):
+class EntryImage(ThumbnailModelMixin, models.Model):
     name = models.CharField(
         max_length=100, blank=True,
         help_text=_("A simple description about image."))
@@ -27,22 +44,11 @@ class EntryImage(models.Model):
     def __unicode__(self):
         return self.image.url
 
-    def get_thumbnail_url(self, size):
-        if not isinstance(size, tuple) or len(size) != 2:
-            return
-
-        thumbnailer = get_thumbnailer(self.image.path)
-        thumb = thumbnailer.get_thumbnail({'size': size, 'crop': True})
-        thumb_url = thumb.url.replace(
-            '%s/' % settings.MEDIA_ROOT, settings.MEDIA_URL)
-
-        return thumb_url
-
     def thumbnail_tag(self):
-        height = 50
-        url = self.get_thumbnail_url((height, height))
-        return '<a href="%s" target="_blank"><img src="%s" height="%s" /></a>' % (
-            self.image.url, url, height)
+        if not self.image:
+            return ''
+
+        return self.get_thumbnail_tag(self.image)
 
     thumbnail_tag.allow_tags = True
     thumbnail_tag.short_description = ''
@@ -87,7 +93,7 @@ class Entry(models.Model):
         super(Entry, self).save(**kwargs)
 
 
-class Article(Entry):
+class Article(ThumbnailModelMixin, Entry):
     cover_image = models.ForeignKey(EntryImage, blank=True, null=True)
     tags = models.ManyToManyField(
         Tag, null=True, blank=True, through='ArticleTag')
@@ -101,6 +107,15 @@ class Article(Entry):
             content = content.strip() + '</div>'
 
         return content
+
+    def thumbnail_tag(self):
+        if not self.cover_image:
+            return ''
+
+        return self.get_thumbnail_tag(self.cover_image.image)
+
+    thumbnail_tag.allow_tags = True
+    thumbnail_tag.short_description = ''
 
 
 class ArticleTag(models.Model):
