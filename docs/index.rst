@@ -16,7 +16,8 @@ You can install Radpress with `pip` or `easy_install`::
     pip install radpress
 
 It also installs it's dependencies, but you need some configuration after
-package installation.
+package installation. In your django project, you should add `easy_thumbnails`
+before `radpress`.
 
 Contents:
 
