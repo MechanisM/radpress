@@ -18,6 +18,8 @@ setup(
     install_requires=[
         'Django>=1.4',
         'docutils>=0.9',
-        'Pygments>=1.5'
+        'Pygments>=1.5',
+        'PIL>=1.1.7',
+        'easy-thumbnails>=1.0.3'
     ]
 )
