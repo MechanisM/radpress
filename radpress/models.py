@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.files import get_thumbnailer
 from radpress.templatetags.radpress_tags import restructuredtext
 from radpress.settings import MORE_TAG
 
@@ -9,6 +12,40 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return unicode(self.name)
+
+
+class EntryImage(models.Model):
+    name = models.CharField(
+        max_length=100, blank=True,
+        help_text=_("A simple description about image."))
+    image = models.ImageField(upload_to='radpress/entry_images/')
+
+    class Meta:
+        verbose_name = _("Image")
+        verbose_name_plural = _("Images")
+
+    def __unicode__(self):
+        return self.image.url
+
+    def get_thumbnail_url(self, size):
+        if not isinstance(size, tuple) or len(size) != 2:
+            return
+
+        thumbnailer = get_thumbnailer(self.image.path)
+        thumb = thumbnailer.get_thumbnail({'size': size, 'crop': True})
+        thumb_url = thumb.url.replace(
+            '%s/' % settings.MEDIA_ROOT, settings.MEDIA_URL)
+
+        return thumb_url
+
+    def thumbnail_tag(self):
+        height = 50
+        url = self.get_thumbnail_url((height, height))
+        return '<a href="%s" target="_blank"><img src="%s" height="%s" /></a>' % (
+            self.image.url, url, height)
+
+    thumbnail_tag.allow_tags = True
+    thumbnail_tag.short_description = ''
 
 
 class EntryManager(models.Manager):
@@ -51,6 +88,7 @@ class Entry(models.Model):
 
 
 class Article(Entry):
+    cover_image = models.ForeignKey(EntryImage, blank=True, null=True)
     tags = models.ManyToManyField(
         Tag, null=True, blank=True, through='ArticleTag')
 
