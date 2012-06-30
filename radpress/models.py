@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -42,7 +43,8 @@ class EntryImage(ThumbnailModelMixin, models.Model):
         verbose_name_plural = _("Images")
 
     def __unicode__(self):
-        return self.image.url
+        image_name = os.path.split(self.image.name)[1]
+        return u"%s - %s" % (self.name, image_name)
 
     def thumbnail_tag(self):
         if not self.image:
