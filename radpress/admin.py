@@ -1,5 +1,5 @@
 from django.contrib import admin
-from radpress.models import Article, ArticleTag, Menu, Page, Tag
+from radpress.models import Article, ArticleTag, EntryImage, Menu, Page, Tag
 from radpress.forms import ArticleForm, PageForm
 
 
@@ -39,8 +39,8 @@ class ArticleTagInline(admin.TabularInline):
 class ArticleAdmin(EntryAdmin):
     form = ArticleForm
     inlines = [ArticleTagInline]
-    list_display = [
-        'title', 'created_at', 'updated_at', 'tag_list', 'is_published']
+    list_display = (
+        'title', 'created_at', 'updated_at', 'tag_list', 'is_published')
     list_filter = ('is_published', 'tags')
 
     def tag_list(self, obj):
@@ -67,3 +67,11 @@ class TagAdmin(admin.ModelAdmin):
 
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Menu, admin.ModelAdmin)
+
+
+class EntryImageAdmin(admin.ModelAdmin):
+    list_display = ('thumbnail_tag', '__unicode__', 'name')
+    list_display_links = ('__unicode__',)
+    search_fields = ('image', 'name')
+
+admin.site.register(EntryImage, EntryImageAdmin)
