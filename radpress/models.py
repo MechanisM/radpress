@@ -95,7 +95,7 @@ class Entry(models.Model):
         super(Entry, self).save(**kwargs)
 
 
-class Article(ThumbnailModelMixin, Entry):
+class Article(Entry):
     cover_image = models.ForeignKey(EntryImage, blank=True, null=True)
     tags = models.ManyToManyField(
         Tag, null=True, blank=True, through='ArticleTag')
@@ -109,15 +109,6 @@ class Article(ThumbnailModelMixin, Entry):
             content = content.strip() + '</div>'
 
         return content
-
-    def thumbnail_tag(self):
-        if not self.cover_image:
-            return ''
-
-        return self.get_thumbnail_tag(self.cover_image.image)
-
-    thumbnail_tag.allow_tags = True
-    thumbnail_tag.short_description = ''
 
 
 class ArticleTag(models.Model):

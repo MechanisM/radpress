@@ -40,9 +40,7 @@ class ArticleAdmin(EntryAdmin):
     form = ArticleForm
     inlines = [ArticleTagInline]
     list_display = (
-        'thumbnail_tag', 'title', 'created_at', 'updated_at', 'tag_list',
-        'is_published')
-    list_display_links = ('title',)
+        'title', 'created_at', 'updated_at', 'tag_list', 'is_published')
     list_filter = ('is_published', 'tags')
 
     def tag_list(self, obj):
