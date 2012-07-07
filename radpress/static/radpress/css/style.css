@@ -16,6 +16,9 @@ header {
 footer {
   padding: 0 40px;
 }
+.article img.cover {
+    margin-top: 20px;
+}
 nav {
     padding: 0 30px;
 }
@@ -73,12 +76,12 @@ footer a.menu {
   text-shadow: #fff 1px 1px 0;
 }
 .article h1.entry-title {
-  font-size: 3em;
-  line-height: 1.5em;
+  font-size: 2em;
+  line-height: 1em;
 }
 .article p,
 .article li {
-    font-size: 1.4em;
+    font-size: 1.2em;
     line-height: 1.8em;
 }
 .article p {

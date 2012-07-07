@@ -1,0 +1,29 @@
+{% load trans from i18n %}
+
+<time datetime="{{ object.updated_at.isoformat }}">{{ object.updated_at|date:"m F, Y"|upper }}</time>
+
+{% if user.is_superuser %}
+  <div class="btn-group pull-right">
+    <a href="{% url admin:radpress_article_change object.id %}" class="btn btn-mini">
+      <i class="icon-edit"></i>
+      {% trans "Edit" %}
+    </a>
+  </div>
+{% endif %}
+
+{% if object.tags.count %}
+  <div class="tags">
+    {% for tag in object.tags.all %}
+      <a class="label label-info" href="{% url radpress-archive %}?tag={{ tag.slug }}">
+        <i class="icon-tag icon-white"></i>
+        {{ tag.name }}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<h1 class="entry-title">
+  <a href="{% url radpress-detail object.slug %}">
+    {{ object.title }}
+  </a>
+</h1>

@@ -1,6 +1,7 @@
 {% extends "radpress/base.html" %}
 
 {% load trans from i18n %}
+{% load thumbnail %}
 
 {% block title %}{% trans "Mainpage" %}{% endblock %}
 
@@ -9,7 +10,15 @@
     {% if object_list.count %}
       {% for object in object_list %}
         <div class="article article-index">
-          {% include "radpress/_article.html" %}
+          {% include "radpress/_article_header.html" %}
+
+          {% if object.cover_image %}
+            <img class="thumbnail cover" src="{% thumbnail object.cover_image.image RADPRESS_COVER_SIZE sharpen crop='smart' %}" />
+          {% endif %}
+
+          <div class="article=content">
+            {{ object.content_by_more|safe }}
+          </div>
 
           <a href="{% url radpress-detail object.slug %}"
              class="more">{% trans "continue reading" %} →</a>
