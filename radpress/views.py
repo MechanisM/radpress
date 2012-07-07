@@ -5,7 +5,17 @@ from radpress.models import Article, Page, Tag
 from radpress.settings import DATA
 
 
-class Index(ListView):
+class TagMixin(object):
+    def get_context_data(self, **kwargs):
+        data = super(TagMixin, self).get_context_data(**kwargs)
+        data.update({
+            'tag_list': Tag.objects.values('name', 'slug').all()
+        })
+
+        return data
+
+
+class Index(TagMixin, ListView):
     template_name = 'radpress/index.html'
     model = Article
 
@@ -19,7 +29,7 @@ class Index(ListView):
         return data
 
 
-class Detail(DetailView):
+class Detail(TagMixin, DetailView):
     template_name = 'radpress/detail.html'
     model = Article
 
@@ -44,7 +54,7 @@ class PageDetail(Detail):
     model = Page
 
 
-class Archive(ArchiveIndexView):
+class Archive(TagMixin, ArchiveIndexView):
     template_name = 'radpress/archive.html'
     model = Article
     date_field = 'created_at'
@@ -63,8 +73,7 @@ class Archive(ArchiveIndexView):
     def get_context_data(self, **kwargs):
         data = super(Archive, self).get_context_data(**kwargs)
         data.update({
-            'enabled_tag': self.request.GET.get('tag'),
-            'tag_list': Tag.objects.values('name', 'slug').all()
+            'enabled_tag': self.request.GET.get('tag')
         })
 
         return data
