@@ -8,7 +8,7 @@ DATA = {
     'RADPRESS_LIMIT': getattr(settings, 'RADPRESS_LIMIT', 5),
     'RADPRESS_GA_CODE': getattr(settings, 'RADPRESS_GA_CODE', None),
     'RADPRESS_DISQUS': getattr(settings, 'RADPRESS_DISQUS', None),
-    'RADPRESS_COVER_SIZE': getattr(settings, 'RADPRESS_COVER_SIZE', '799x300')
+    'RADPRESS_COVER_SIZE': getattr(settings, 'RADPRESS_COVER_SIZE', '652x248')
 }
 
 MORE_TAG = '<!-- more -->'

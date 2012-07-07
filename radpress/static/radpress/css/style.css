@@ -1,10 +1,6 @@
 body {
     padding: 0 0 40px 0;
     background: #232323;
-    font-family: serif;
-}
-body p {
-    font-family: serif;
 }
 header {
   background-color: #333;
@@ -70,23 +66,26 @@ footer a.menu {
 .article {
   padding-bottom: 10px;
 }
+
 .article time {
-  font-size: 16px;
-  color: #999;
-  text-shadow: #fff 1px 1px 0;
+    margin-bottom: 10px;
+    display: block;
+    font-size: 16px;
+    color: #999;
+    text-shadow: #fff 1px 1px 0;
 }
+
 .article h1.entry-title {
   font-size: 2em;
   line-height: 1em;
 }
 .article p,
 .article li {
-    font-size: 1.2em;
-    line-height: 1.8em;
+    font-size: 1.1em;
+    line-height: 1.4em;
 }
 .article p {
   margin: 25px 0;
-  font-family: serif;
 }
 #content {
     background: #eee;
@@ -167,9 +166,6 @@ h3.blog-archives a:hover {
 }
 #message .alert {
     margin-bottom: 0;
-}
-#blog-archive {
-    font-family: serif;
 }
 #blog-archive h1 {
     padding-bottom: 20px;
