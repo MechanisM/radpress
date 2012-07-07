@@ -1,10 +1,6 @@
 body {
     padding: 0 0 40px 0;
     background: #232323;
-    font-family: serif;
-}
-body p {
-    font-family: serif;
 }
 header {
   background-color: #333;
@@ -15,6 +11,9 @@ header {
 .set-content-margin,
 footer {
   padding: 0 40px;
+}
+.article img.cover {
+    margin-top: 20px;
 }
 nav {
     padding: 0 30px;
@@ -29,11 +28,6 @@ nav {
   padding-bottom: 40px;
   padding-right: 30px;
 }
-#sidebar ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
 #sidebar ul li {
     margin-bottom: 10px;
 }
@@ -42,6 +36,9 @@ nav {
 }
 #sidebar h2 {
     margin-bottom: 20px;
+}
+.sidebar-box {
+    margin-bottom: 50px;
 }
 footer {
   border-top: 1px solid #bbb;
@@ -67,23 +64,26 @@ footer a.menu {
 .article {
   padding-bottom: 10px;
 }
+
 .article time {
-  font-size: 16px;
-  color: #999;
-  text-shadow: #fff 1px 1px 0;
+    margin-bottom: 10px;
+    display: block;
+    font-size: 16px;
+    color: #999;
+    text-shadow: #fff 1px 1px 0;
 }
+
 .article h1.entry-title {
-  font-size: 3em;
-  line-height: 1.5em;
+  font-size: 2em;
+  line-height: 1em;
 }
 .article p,
 .article li {
-    font-size: 1.4em;
-    line-height: 1.8em;
+    font-size: 1.1em;
+    line-height: 1.4em;
 }
 .article p {
   margin: 25px 0;
-  font-family: serif;
 }
 #content {
     background: #eee;
@@ -165,9 +165,6 @@ h3.blog-archives a:hover {
 #message .alert {
     margin-bottom: 0;
 }
-#blog-archive {
-    font-family: serif;
-}
 #blog-archive h1 {
     padding-bottom: 20px;
     font-size: 42px;
@@ -195,7 +192,7 @@ h3.blog-archives a:hover {
     color: #aaa;
 }
 #blog-archive time {
-    font-size: 20px;
+    font-size: 14px;
 }
 #archive-tags a.remove-tag {
     margin: -25px 0 7px 0;

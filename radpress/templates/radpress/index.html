@@ -1,6 +1,7 @@
 {% extends "radpress/base.html" %}
 
 {% load trans from i18n %}
+{% load thumbnail %}
 
 {% block title %}{% trans "Mainpage" %}{% endblock %}
 
@@ -9,10 +10,52 @@
     {% if object_list.count %}
       {% for object in object_list %}
         <div class="article article-index">
-          {% include "radpress/_article.html" %}
+          <div class="row-fluid">
 
-          <a href="{% url radpress-detail object.slug %}"
-             class="more">{% trans "continue reading" %} →</a>
+            <div class="span2">
+              <time datetime="{{ object.updated_at.isoformat }}">{{ object.updated_at|date:"m F, Y"|upper }}</time>
+
+              {% if object.tags.count %}
+                <div class="tags">
+                  {% for tag in object.tags.all %}
+                    <a class="label label-info" href="{% url radpress-archive %}?tag={{ tag.slug }}">
+                      <i class="icon-tag icon-white"></i>
+                      {{ tag.name }}
+                    </a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="span10">
+              {% if user.is_superuser %}
+                <div class="btn-group pull-right">
+                  <a href="{% url admin:radpress_article_change object.id %}" class="btn btn-mini">
+                    <i class="icon-edit"></i>
+                    {% trans "Edit" %}
+                  </a>
+                </div>
+              {% endif %}
+
+              <h1 class="entry-title">
+                <a href="{% url radpress-detail object.slug %}">
+                  {{ object.title }}
+                </a>
+              </h1>
+
+              {% if object.cover_image %}
+                <img class="thumbnail cover" src="{% thumbnail object.cover_image.image RADPRESS_COVER_SIZE sharpen crop='smart' %}" />
+              {% endif %}
+
+              <div class="article-content">
+                {{ object.content_by_more|safe }}
+              </div>
+
+              <div class="article-footer">
+                <a href="{% url radpress-detail object.slug %}" class="more">{% trans "Read the rest of this entry" %} →</a>
+              </div>
+            </div>
+          </div>
         </div>
       {% endfor %}
       <h3 class="blog-archives">
@@ -21,11 +64,5 @@
     {% else %}
       <p class="set-content-margin">{% trans "There's no post for now." %}</p>
     {% endif %}
-  </div>
-{% endblock %}
-
-{% block sidebar %}
-  <div class="sidebar-box">
-    {% include "radpress/_recent_posts.html" %}
   </div>
 {% endblock %}
