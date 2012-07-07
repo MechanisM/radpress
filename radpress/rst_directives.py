@@ -5,6 +5,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers.special import TextLexer
 from radpress.solarized import SolarizedStyle
+from radpress.settings import MORE_TAG
 
 DEFAULT = HtmlFormatter(style=SolarizedStyle)
 VARIANTS = {
@@ -31,3 +32,9 @@ class Pygments(Directive):
             self.options and VARIANTS[self.options.keys()[0]] or DEFAULT)
         parsed = highlight(u'\n'.join(self.content), lexer, formatter)
         return [nodes.raw('', parsed, format='html')]
+
+
+class More(Directive):
+
+    def run(self):
+        return MORE_TAG

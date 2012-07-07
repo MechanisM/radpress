@@ -86,7 +86,26 @@
             </div>
             <div class="span3 sidebar-span">
               <div id="sidebar">
-                {% block sidebar %}{% endblock %}
+                {% block sidebar %}
+                  <div class="sidebar-box">
+                    {% include "radpress/_latest_posts.html" %}
+                  </div>
+
+                  {% if tag_list %}
+                    <div class="sidebar-box">
+                      <h2>{% trans "Tag Cloud" %}</h2>
+
+                      <div class="tags">
+                        {% for tag in tag_list %}
+                          <a class="label {% if tag.slug != enabled_tag %} label-info{% endif %}"
+                             href="{% url radpress-archive %}?tag={{ tag.slug }}">
+                             <i class="icon-tag icon-white"></i>
+                             {{ tag.name }}
+                          </a>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                {% endblock %}
               </div>
             </div>
           {% endblock %}

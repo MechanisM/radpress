@@ -1,5 +1,27 @@
+import os
+from django.conf import settings
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.files import get_thumbnailer
 from radpress.templatetags.radpress_tags import restructuredtext
+from radpress.settings import MORE_TAG
+
+
+class ThumbnailModelMixin(object):
+    def get_thumbnail(self, path, size):
+        thumbnailer = get_thumbnailer(path)
+        thumb = thumbnailer.get_thumbnail({'size': size, 'crop': True})
+
+        return thumb
+
+    def get_thumbnail_tag(self, image, size=None):
+        size = size or (50, 50)
+        thumb = self.get_thumbnail(image.path, size)
+        url = thumb.url.replace(
+            '%s/' % settings.MEDIA_ROOT, settings.MEDIA_URL)
+        res = '<a href="%s" target="_blank"><img src="%s" height="%s" /></a>'
+
+        return res % (image.url, url, size[1])
 
 
 class Tag(models.Model):
@@ -8,6 +30,30 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return unicode(self.name)
+
+
+class EntryImage(ThumbnailModelMixin, models.Model):
+    name = models.CharField(
+        max_length=100, blank=True,
+        help_text=_("A simple description about image."))
+    image = models.ImageField(upload_to='radpress/entry_images/')
+
+    class Meta:
+        verbose_name = _("Image")
+        verbose_name_plural = _("Images")
+
+    def __unicode__(self):
+        image_name = os.path.split(self.image.name)[1]
+        return u"%s - %s" % (self.name, image_name)
+
+    def thumbnail_tag(self):
+        if not self.image:
+            return ''
+
+        return self.get_thumbnail_tag(self.image)
+
+    thumbnail_tag.allow_tags = True
+    thumbnail_tag.short_description = ''
 
 
 class EntryManager(models.Manager):
@@ -50,8 +96,19 @@ class Entry(models.Model):
 
 
 class Article(Entry):
+    cover_image = models.ForeignKey(EntryImage, blank=True, null=True)
     tags = models.ManyToManyField(
         Tag, null=True, blank=True, through='ArticleTag')
+
+    @property
+    def content_by_more(self):
+        content_list = self.content_body.split(MORE_TAG, 1)
+        content = content_list[0]
+
+        if len(content_list) > 1:
+            content = content.strip() + '</div>'
+
+        return content
 
 
 class ArticleTag(models.Model):
